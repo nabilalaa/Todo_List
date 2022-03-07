@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static "css/normalize.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/responsive.css" %}"/>
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    {% block content %}
+        <h1>my todo list</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="title"/>
+            <button>create</button>
+        </form>
+
+        <hr/>
+
+        {% for todo in AllTodo %}
+            <div class="todo">
+                <h2>{{ todo.title }}</h2>
+                <a href="{% url "delete" todo_id=todo.id %}">delete</a>
+                <a href="{% url "update" todo_id=todo.id %}" id="update">update</a>
+            </div>
+        {% endfor %}
+    {% endblock %}
+</div>
+{#<script src="{% static "js/main.js" %}"></script>#}
+</body>
+</html>
